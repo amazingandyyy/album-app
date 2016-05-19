@@ -42,16 +42,16 @@ describe('Album', function() {
                 expect(err).to.not.exist;
                 expect(data).to.exist;
                 done();
-            })
-        })
+            });
+        });
         it('should not add a new photo to album or relate the album to the photo we just added. - missing data', function(done) {
             var params = {};
             Album.addPhoto(params, function(err, data) {
                 expect(err).to.exist;
                 expect(data).to.not.exist;
                 done();
-            })
-        })
+            });
+        });
     })
 
 });

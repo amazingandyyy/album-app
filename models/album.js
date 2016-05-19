@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var Image = require('./image');
+var Imagetou = require('./image');
 
 var albumSchema = new mongoose.Schema({
     name: {
@@ -39,6 +39,7 @@ albumSchema.statics.addPhoto = function(params, cb) {
         .then(album => {
             console.log('check2');
             console.log('imageId after check2: ', imageId);
+            console.log('check2.5');
             // here is not promise there is no resolve or reject...
             Image.findOne({"_id": imageId}, (err, image) => {
                 console.log('check3');
@@ -55,7 +56,7 @@ albumSchema.statics.addPhoto = function(params, cb) {
                         })
                     })
                 } else {
-                    cb(err)
+                    cb(null, image)
                 }
             })
         })
