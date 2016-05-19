@@ -15,32 +15,41 @@ var albumSchema = new mongoose.Schema({
 
 albumSchema.statics.addPhoto = function(params, cb) {
     var albumId = params.albumId;
-    var photoId = params.photoId;
+    var imageId = params.imageId;
     console.log('albumId: ', albumId);
-    console.log('photoId: ', photoId);
-    new Promise((resolve, reject)=>{
-        this.findById(albumId, (err, album) => {
-            if (err) return reject(err);
-            album.photos.push(photoId);
-            album.save(err => {
-                if (err) return reject(err);
-                resolve(album)
-            })
+    console.log('imageId: ', imageId);
+    new Promise((resolve, reject) => {
+            this.findById(albumId, (err, album) => {
+                // console.log('errerr: ', err);
+                // console.log('albumalbum: ', album);
+                // console.log('!album: ', !album);
+                if (err || !album) {
+                    reject(err || 'not album found')
+                } else {
+                    album.photos.push(imageId);
+                    album.save(err => {
+                        if (err) reject(err);
+                        resolve(album)
+                    })
+                }
 
-        })
-    })
-    .then(album=>{
-        Image.findById( photoId, (err, image) => {
-            if (err) reject(err);
-            image.albums.push(albumId);
-            image.save( err=>{
-                if (err) reject(err);
-                cb(null, {album,image})
             })
         })
-    })
-    .catch(err => cb(cb))
-
+        .then(album => {
+            // here is not promise there is no resolve or reject...
+            Image.findById(imageId, (err, image) => {
+                if (err) return cb(err);
+                image.albums.push(albumId);
+                image.save(err => {
+                    if (err) return cb(err);
+                    cb(null, {
+                        album,
+                        image
+                    })
+                })
+            })
+        })
+        .catch(err => cb(err))
 };
 
 var Album = mongoose.model('Album', albumSchema);

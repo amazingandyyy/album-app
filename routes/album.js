@@ -42,7 +42,7 @@ router.delete('/:id', (req, res) => {
         })
 });
 
-router.post('/:albumId/add/:photoId', (req, res) => {
+router.post('/:albumId/add/:imageId', (req, res) => {
     console.log('req.params', req.params);
     // create one album with name and photos
     Album.addPhoto(req.params, (err, data) => {
