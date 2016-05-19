@@ -5,8 +5,7 @@ var Image = require('../models/image');
 
 router.post('/', (req, res) => {
     // create one album with name and photos
-    Image.create(req.body)
-        .exec((err, image) => {
+    Image.create(req.body,(err, image) => {
             res.status(err ? 400 : 200).send(err || image)
         })
 });
@@ -35,10 +34,18 @@ router.get('/:id', (req, res) => {
 });
 router.delete('/:id', (req, res) => {
     // remove one image by id
-    Image.remove({'_id': req.params.id})
+    Image.findByIdAndRemove({'_id': req.params.id})
         .populate('albums')
         .exec((err) => {
             res.status(err ? 400 : 200).send(err);
+        })
+});
+
+router.post('/:imageId/add/:albumId', (req, res) => {
+    console.log('req.params', req.params);
+    // create one album with name and photos
+    Image.addToAlbum(req.params, (err, data) => {
+            res.status(err ? 400 : 200).send(err || data)
         })
 });
 
