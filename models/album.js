@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var Imagetou = require('./image');
+// var Image = require('./image');
 
 var albumSchema = new mongoose.Schema({
     name: {
@@ -18,35 +18,40 @@ albumSchema.statics.addPhoto = function(params, cb) {
     var imageId = params.imageId;
     // console.log('albumId: ', albumId);
     // console.log('imageId: ', imageId);
-    new Promise((resolve, reject) => {
-            this.findById(albumId, (err, album) => {
-                if (err || !album || !imageId) {
-                    reject(err || 'album not found')
-                } else {
-                    if (album.images.indexOf(imageId) === -1) {
-                        console.log('check1');
-                        album.images.push(imageId);
-                        album.save(err => {
-                            if (err) reject(err);
-                            resolve(album);
-                        })
-                    } else {
-                        reject('imageId already exists');
-                    }
-                }
-            })
+
+
+    var promise = new Promise((resolve, reject) => {
+        this.findById(albumId, (err, album) => {
+            console.log('album:', album);
+            if (err || !album || !imageId) {
+                return reject(err || 'album not found');
+            }
+            // console.log('album.images.indexOf(imageId) === -1: ', album.images.indexOf(imageId) === -1);
+            if (album.images.indexOf(imageId) === -1) {
+                album.images.push(imageId);
+                album.save(err => {
+                    if (err) return reject(err);
+                    resolve(album);
+                })
+            } else {
+                reject('imageId already exists');
+            }
+
         })
+    })
+
+    promise
         .then(album => {
-            console.log('check2');
-            console.log('imageId after check2: ', imageId);
-            console.log('check2.5');
+            // console.log('check2');
+            // console.log('imageId after check2: ', imageId);
+            // console.log('check2.5');
             // here is not promise there is no resolve or reject...
-            Image.findOne({"_id": imageId}, (err, image) => {
-                console.log('check3');
-                console.log('imageimageimage: ', image);
+            mongoose.model('Image').findById(imageId, (err, image) => {
+                // console.log('check3');
+                // console.log('imageimageimage: ', image);
                 if (err) return cb(err);
                 if (image.albums.indexOf(albumId) === -1) {
-                    console.log('check4');
+                    // console.log('check4');
                     image.albums.push(albumId);
                     image.save(err => {
                         if (err) return cb(err);
@@ -60,7 +65,10 @@ albumSchema.statics.addPhoto = function(params, cb) {
                 }
             })
         })
-        .catch(err => cb(err))
+        .catch(err => {
+            console.log('ERR:', err)
+            cb(err)
+        })
 };
 
 var Album = mongoose.model('Album', albumSchema);

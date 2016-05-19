@@ -3,3 +3,5 @@ node_js:
     - "5"
 notifications:
     email: false
+services:
+    - mongodb

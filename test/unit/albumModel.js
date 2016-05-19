@@ -3,42 +3,46 @@
 var expect = require('chai').expect;
 
 const mongoose = require('mongoose');
-var Image = require('../../models/image');
 var Album = require('../../models/album');
+var Image = require('../../models/image');
 const dbUrl = 'mongodb://localhost/album-app-test2';
 let imageId, albumId;
 
 // add data to testDB first to test the relationship funtion
 before(function(cb) {
     mongoose.connection.close(function() {
-        mongoose.connect(dbUrl, cb);
-
-        Album.create({
-            name: "testAlbumName"
-        }, (err, album) => {
-            albumId = album._id
-        })
-        Image.create({
-            url: "testAlbumName",
-            title: "testAlbumTitle",
-            description: "dd"
-        }, (err, image) => {
-            console.log('image: - test', image);
-            imageId = image._id
-        })
-
+        mongoose.connect(dbUrl, function(err) {
+            Album.create({
+                name: "testAlbumName"
+            }, (err, album) => {
+                albumId = album._id;
+                Image.create({
+                    url: "testAlbumName",
+                    title: "testAlbumTitle",
+                    description: "dd"
+                }, (err, image) => {
+                    // console.log('image: - test', image);
+                    imageId = image._id;
+                    cb()
+                });
+            })
+        });
     });
 });
 
 // test root/api/album/:albumId/add/:imageId
 describe('Album', function() {
+    this.timeout(10000);
     describe('.addPhoto()', function() {
         it('should add a new photo to album and relate the album to the photo we just added.', function(done) {
             var params = {};
+            // console.log('albumId: ', albumId);
+            // console.log('imageId: ', imageId);
             params.albumId = albumId;
             params.imageId = imageId;
+            console.log('params: ', params);
             Album.addPhoto(params, function(err, data) {
-                console.log('dataa: ', data);
+                // console.log('dataa: ', data);
                 expect(err).to.not.exist;
                 expect(data).to.exist;
                 done();
