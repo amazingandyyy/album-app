@@ -1,0 +1,21 @@
+{
+  "name": "album-app",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "TESTING=true mocha ./test/** -R nyan"
+  },
+  "dependencies": {
+    "body-parser": "~1.13.2",
+    "chai": "^3.5.0",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "ejs": "~2.3.3",
+    "expect": "^1.20.1",
+    "express": "~4.13.1",
+    "mongoose": "^4.4.17",
+    "morgan": "~1.6.1",
+    "serve-favicon": "~2.3.0"
+  }
+}
