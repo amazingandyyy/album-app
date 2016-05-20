@@ -3,7 +3,7 @@
     <div class="col-xs-4 col-sm-6 col-md-4 col-lg-3 col-andy">
         <div class="card adding">
             <!-- <span class="icon-focus"></span> -->
-            <p class="addPhoto" ng-click="toogleAddPhoto()">Add photo</p>
+            <p class="addPhoto" ng-click="toggleAddPhoto()">Add photo</p>
         </div>
     </div>
         <div class="col-xs-4 col-sm-6 col-md-4 col-lg-3 col-andy" ng-repeat="photo in photos">
@@ -15,4 +15,12 @@
                 </div>
             </div>
         </div>
+</div>
+<div class="andy-modal" ng-if="getModal">
+    <div class="andy-modal-body">
+        <h1>Add photo</h1>
+        <form ng-submit="addNewPhoto()">
+            <input type="text" ng-model="newPhoto.url">
+        </form>
+    </div>
 </div>

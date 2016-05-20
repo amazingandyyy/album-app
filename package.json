@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "TESTING=true mocha ./test/** -R nyan"
+    "test": "TESTING=true mocha ./test/** -R nyan",
+    "postinstall": "bower i"
   },
   "engines": {
     "node": "5.10.1"

@@ -7,6 +7,16 @@ var albumSchema = new mongoose.Schema({
     name: {
         type: String
     },
+    createAt: {
+        type: Date,
+        data: new Date
+    },
+    title: {
+        type: String
+    },
+    description: {
+        type: String
+    },
     images: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Image'

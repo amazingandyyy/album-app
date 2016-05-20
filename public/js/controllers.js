@@ -2,16 +2,9 @@
 
 var app = angular.module('albumApp');
 
-
 app.controller('mainCtrl', function($http, $scope) {
     console.log('mainCtrl loaded');
-    $scope.toogleAddPhoto = () => {
-        console.log('yo');
-        $scope.getModal = true;
-    }
-    $scope.closeModal = () => {
-        $scope.getModal = false;
-    }
+
 });
 app.controller('photosCtrl', function($http, $scope) {
     console.log('photosCtrl loaded');
@@ -35,10 +28,18 @@ app.controller('photosCtrl', function($http, $scope) {
         url: "http://www.eagleview.com.au/_assets/img/testimonials/Testimonial-3.jpg"
     }]
     $scope.photos = photos;
+    $scope.toggleAddPhoto = () => {
+        console.log('yo');
+        $scope.getModal = true;
+    }
+    $scope.closeModal = () => {
+        $scope.getModal = false;
+    }
 
 });
 app.controller('photoCtrl', function($http, $scope) {
     console.log('photoCtrl loaded');
+
 });
 app.controller('albumsCtrl', function($http, $scope) {
     console.log('albumsCtrl loaded');
