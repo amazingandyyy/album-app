@@ -1,0 +1,24 @@
+{
+  "name": "album-app",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Amazingandyyy <amazingandyyy@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/amazingandyyy/album-app",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.5",
+    "bootstrap": "^3.3.6",
+    "angular-route": "^1.5.5",
+    "font-awesome": "^4.6.3"
+  }
+}
